@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>文字列ツクール</title>
+  </head>
+  <body>
+    <h1>文字列ツクール</h1>
+    <p>つくりたい文字数：<input type="number" id="MojiSu" size="1" min="0" step="1"> 文字</p>
+    <input type="button" value="文字列生成" id="btn_strCreate" >
+    <input type="button" value="コピペ" id="btn_clipCopy">
+    <p><input type="button" value="リセット" id="btn_reset"></p>
+    <p><textarea id="text" cols="50" rows="7" ></textarea></p>
+    <script>
+            const btn = document.querySelector('#btn_strCreate');
+            const reset = document.querySelector('#btn_reset');
+            const text = document.querySelector('#text');
+            const copy = document.querySelector('#btn_clipCopy');
+            const tempMojiretsu = ["一","二","三","四","五","六","七","八","九","☆"];
+            let mojiretsu;
+            let rank_10;
+            let rank_01;
+            reset.addEventListener('click',()=>{
+                text.value = ""
+            })
+            
+            btn.addEventListener('click',()=>{
+                text.value = ""
+                const str =document.querySelector('#MojiSu');
+                if (str != 0){
+                const mojisu = Number(str.value);
+                mojiretsu="";
+                rank_01 = mojisu % 10;
+                rank_10 = Math.floor(mojisu / 10);
+                if (rank_10 != 0){
+                    for(let cnt = 0; cnt<rank_10; cnt++){
+                        for (const Moji of tempMojiretsu){
+                            mojiretsu += Moji;
+                        }
+                    }
+                }
+                if (rank_01 != 0){
+                    for(let cnt = 0; cnt<rank_01;cnt++){
+                    mojiretsu += tempMojiretsu[cnt];
+                    }
+                }
+                mojiretsu = mojiretsu.slice(0,-1) + "★";
+                text.value = mojiretsu;
+            }
+
+            copy.addEventListener('click',()=>{
+                text.select();
+                document.execCommand("Copy");
+            })
+        })
+    </script>
+  </body>
+</html>
